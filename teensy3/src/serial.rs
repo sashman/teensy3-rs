@@ -19,10 +19,10 @@ impl Serial {
     }
 
     /// Try to read a byte
-    pub fn try_read_byte(self) -> Result<u8, &'static str> {
+    pub fn try_read_byte(self) -> Option<u8> {
         match unsafe { bindings::usb_serial_getchar() } {
-            -1 => Err("usb_serial_getchar returned -1"),
-            byte => Ok(byte as u8)
+            -1 => None,
+            byte => Some(byte as u8)
         }
     }
 
